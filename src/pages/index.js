@@ -1,4 +1,6 @@
 import Head from "next/head";
+import Accordion from "../components/accordion";
+import Sort from "../components/sort-tab";
 
 export default function Home() {
   return (
@@ -9,8 +11,33 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='bg-red-500'>
-        <h1 className=''>Hello Next App!!!!</h1>
+      <main className='bg-slate-50'>
+        <div className='container mx-auto lg:max-w-screen-xl'>
+          <div className='grid md:grid-cols-12 grid-rows-[70px_minmax(300px,_1fr)] gap-8 p-4 min-h-screen'>
+            <div className=' hidden  md:block md:col-span-3 md:row-span-2 '>
+              <Accordion />
+            </div>
+            <div className='hidden md:block md:col-span-9  '>
+              <Sort />
+            </div>
+            <div className='md:col-span-9 grid grid-cols-6 gap-y-6 gap-x-10'>
+              {[1, 2, 3, 4, 5, 6].map((index) => {
+                return (
+                  <div
+                    className='clo-span-6 md:col-span-3 rounded-xl lg:col-span-2 bg-white'
+                    key={index}
+                  >
+                    {/* blogs cover */}
+
+                    {/* blogs content */}
+
+                    {/* blogs actions */}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </main>
     </>
   );
