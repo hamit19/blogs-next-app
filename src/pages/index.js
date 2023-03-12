@@ -1,6 +1,14 @@
 import Head from "next/head";
+import Image from "next/image";
 import Accordion from "../components/accordion";
 import Sort from "../components/sort-tab";
+
+import {
+  ChatAltIcon,
+  HeartIcon,
+  BookmarkIcon,
+  ClockIcon,
+} from "@heroicons/react/outline";
 
 export default function Home() {
   return (
@@ -20,18 +28,86 @@ export default function Home() {
             <div className='hidden md:block md:col-span-9  '>
               <Sort />
             </div>
-            <div className='md:col-span-9 grid grid-cols-6 gap-y-6 gap-x-10'>
-              {[1, 2, 3, 4, 5, 6].map((index) => {
+            <div className='md:col-span-9 grid grid-cols-6 gap-y-6  gap-x-10'>
+              {[
+                "nextjs.png",
+                "nodejs.jpg",
+                "nuxtjs.jpg",
+                "nuxtjs2.png",
+                "python.jpg",
+                "vuejs.png",
+              ].map((item, index) => {
                 return (
                   <div
-                    className='clo-span-6 md:col-span-3 rounded-xl lg:col-span-2 bg-white'
+                    className='col-span-6 md:col-span-3 rounded-xl lg:col-span-2 flex flex-col bg-white'
                     key={index}
                   >
                     {/* blogs cover */}
+                    <div className='relative rounded-2xl overflow-hidden pt-[56%]'>
+                      <Image
+                        fill={true}
+                        src={`/images/${item}`}
+                        alt='blogs cover'
+                        className='absolute inset-0 object-cover object-center '
+                      />
+                    </div>
 
                     {/* blogs content */}
-
-                    {/* blogs actions */}
+                    <div className='px-2 py-4  flex flex-col flex-1 justify-between w-full'>
+                      {/* blogs title */}
+                      <h3 className='font-bold mb-4'>
+                        {index !== 2
+                          ? "Everything about React and Redux! "
+                          : " Everything about React and Redux and how to use of Redux in React js and Next js!"}
+                      </h3>
+                      {/* blogs data */}
+                      <div className='flex flex-col gap-3'>
+                        {/* author info */}
+                        <div className='flex items-center justify-between'>
+                          <div className='flex items-center justify-start gap-2 py-2 text-sm'>
+                            {/* avatar */}
+                            <div className='w-6 h-6 rounded-full relative ring-2 ring-slate-100 overflow-hidden'>
+                              <Image
+                                src={"/images/vuejs.png"}
+                                alt='avatar'
+                                fill={true}
+                                className='absolute inset-0 object-cover object-center'
+                              />
+                            </div>
+                            <span className='font-bold text-xs text-gray-500'>
+                              Hamid Hassani
+                            </span>
+                          </div>
+                          <span className='px-3 cursor-pointer py-1 text-xs font-bold rounded-full bg-blue-100 hover:bg-blue-500 hover:text-white custom-transition  text-blue-500 '>
+                            React
+                          </span>
+                        </div>
+                        {/* actions */}
+                        <div className='py-2 flex items-center justify-between sm:justify-start '>
+                          <div className='flex items-center gap-2'>
+                            <div className='h-6 w-11 p-1 bg-slate-200 cursor-pointer text-gray-600 flex gap-1 items-center justify-center  rounded-md'>
+                              <ChatAltIcon className='w-4 h-4' />
+                              <span className='text-xs font-bold text-gray-500'>
+                                1
+                              </span>
+                            </div>
+                            <div className='h-6 w-11 p-1 bg-rose-200 custom-transition cursor-pointer hover:text-white hover:bg-rose-600 text-rose-600 flex gap-1 items-center justify-center  rounded-md'>
+                              <HeartIcon className='w-4 h-4' />
+                              <span className='text-xs font-bold'>56</span>
+                            </div>
+                            <div className='h-6 w-6 p-1 bg-blue-200 hover:bg-blue-600 hover:text-white custom-transition cursor-pointer text-blue-600   rounded-md'>
+                              <BookmarkIcon className='w-4 h-4 mr-2' />
+                            </div>
+                          </div>
+                          <div className='flex items-center justify-start pl-2 w-1/2 gap-1'>
+                            <ClockIcon className='w-4 h-4 stroke-gray-500 ' />
+                            <span className='text-xs font-medium text-gray-500'>
+                              10 min read
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })}
