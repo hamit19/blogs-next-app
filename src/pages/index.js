@@ -10,7 +10,12 @@ import {
   ClockIcon,
 } from "@heroicons/react/outline";
 
-export default function Home() {
+// import { HeartIcon } from "@heroicons/react/solid";
+import axios from "axios";
+
+export default function Home({ data }) {
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -19,46 +24,39 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='bg-slate-50'>
+      <main className=' bg-slate-50'>
         <div className='container mx-auto lg:max-w-screen-xl'>
           <div className='grid md:grid-cols-12 grid-rows-[70px_minmax(300px,_1fr)] gap-8 p-4 min-h-screen'>
-            <div className=' hidden  md:block md:col-span-3 md:row-span-2 '>
+            <div className='hidden md:block md:col-span-3 md:row-span-2'>
               <Accordion />
             </div>
-            <div className='hidden md:block md:col-span-9  '>
+            <div className='hidden md:block md:col-span-9 '>
               <Sort />
             </div>
-            <div className='md:col-span-9 grid grid-cols-6 gap-y-6  gap-x-10'>
-              {[
-                "nextjs.png",
-                "nodejs.jpg",
-                "nuxtjs.jpg",
-                "nuxtjs2.png",
-                "python.jpg",
-                "vuejs.png",
-              ].map((item, index) => {
+            <div className='grid grid-cols-6 md:col-span-9 gap-y-6 gap-x-10'>
+              {data.docs.map((blog) => {
                 return (
                   <div
-                    className='col-span-6 md:col-span-3 rounded-xl lg:col-span-2 flex flex-col bg-white'
-                    key={index}
+                    className='flex flex-col col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'
+                    key={blog._id}
                   >
                     {/* blogs cover */}
                     <div className='relative rounded-2xl overflow-hidden pt-[56%]'>
                       <Image
                         fill={true}
-                        src={`/images/${item}`}
+                        src={blog.coverImage}
                         alt='blogs cover'
                         className='absolute inset-0 object-cover object-center '
                       />
                     </div>
 
                     {/* blogs content */}
-                    <div className='px-2 py-4  flex flex-col flex-1 justify-between w-full'>
+                    <div className='flex flex-col justify-between flex-1 w-full px-2 py-4'>
                       {/* blogs title */}
-                      <h3 className='font-bold mb-4'>
-                        {index !== 2
-                          ? "Everything about React and Redux! "
-                          : " Everything about React and Redux and how to use of Redux in React js and Next js!"}
+                      <h3 className='mb-4 font-bold'>
+                        {blog.title.length > 50
+                          ? `${blog.title.substr(0, 50)}...`
+                          : blog.title}
                       </h3>
                       {/* blogs data */}
                       <div className='flex flex-col gap-3'>
@@ -66,7 +64,7 @@ export default function Home() {
                         <div className='flex items-center justify-between'>
                           <div className='flex items-center justify-start gap-2 py-2 text-sm'>
                             {/* avatar */}
-                            <div className='w-6 h-6 rounded-full relative ring-2 ring-slate-100 overflow-hidden'>
+                            <div className='relative w-6 h-6 overflow-hidden rounded-full ring-2 ring-slate-100'>
                               <Image
                                 src={"/images/vuejs.png"}
                                 alt='avatar'
@@ -74,35 +72,41 @@ export default function Home() {
                                 className='absolute inset-0 object-cover object-center'
                               />
                             </div>
-                            <span className='font-bold text-xs text-gray-500'>
-                              Hamid Hassani
+                            <span className='text-xs font-bold text-gray-500'>
+                              {blog.author.name}
                             </span>
                           </div>
-                          <span className='px-3 cursor-pointer py-1 text-xs font-bold rounded-full bg-blue-100 hover:bg-blue-500 hover:text-white custom-transition  text-blue-500 '>
-                            React
+                          <span className='px-3 py-1 text-xs font-bold text-blue-500 bg-blue-100 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white custom-transition '>
+                            {blog.category.title}
                           </span>
                         </div>
                         {/* actions */}
-                        <div className='py-2 flex items-center justify-between sm:justify-start '>
+                        <div className='flex items-center justify-between py-2 sm:justify-start '>
                           <div className='flex items-center gap-2'>
-                            <div className='h-6 w-11 p-1 bg-slate-200 cursor-pointer text-gray-600 flex gap-1 items-center justify-center  rounded-md'>
+                            <div className='flex items-center justify-center h-6 gap-1 p-1 text-gray-600 rounded-md cursor-pointer w-11 bg-slate-200'>
                               <ChatAltIcon className='w-4 h-4' />
                               <span className='text-xs font-bold text-gray-500'>
-                                1
+                                {blog.commentsCount}
                               </span>
                             </div>
-                            <div className='h-6 w-11 p-1 bg-rose-200 custom-transition cursor-pointer hover:text-white hover:bg-rose-600 text-rose-600 flex gap-1 items-center justify-center  rounded-md'>
-                              <HeartIcon className='w-4 h-4' />
-                              <span className='text-xs font-bold'>56</span>
+                            <div className='flex items-center justify-center h-6 gap-1 p-1 rounded-md cursor-pointer w-11 bg-rose-200 custom-transition hover:text-white hover:bg-rose-600 text-rose-600'>
+                              {!blog.isLiked ? (
+                                <HeartIcon className='w-4 h-4' />
+                              ) : (
+                                <HeartIcon className='w-4 h-4 ' />
+                              )}
+                              <span className='text-xs font-bold'>
+                                {blog.likesCount}
+                              </span>
                             </div>
-                            <div className='h-6 w-6 p-1 bg-blue-200 hover:bg-blue-600 hover:text-white custom-transition cursor-pointer text-blue-600   rounded-md'>
+                            <div className='w-6 h-6 p-1 text-blue-600 bg-blue-200 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
                               <BookmarkIcon className='w-4 h-4 mr-2' />
                             </div>
                           </div>
-                          <div className='flex items-center justify-start pl-2 w-1/2 gap-1'>
+                          <div className='flex items-center justify-start w-1/2 gap-1 pl-2'>
                             <ClockIcon className='w-4 h-4 stroke-gray-500 ' />
                             <span className='text-xs font-medium text-gray-500'>
-                              10 min read
+                              {blog.readingTime}min read
                             </span>
                           </div>
                         </div>
@@ -117,4 +121,16 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const { data } = await axios.get(
+    "http://localhost:5000/api/posts?page=1&limit=6"
+  );
+
+  return {
+    props: {
+      data: data.data,
+    },
+  };
 }
