@@ -2,8 +2,20 @@ import React, { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
-const Accordion = () => {
+const Accordion = ({ postsCategories }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const renderCategories = () => {
+    return postsCategories.map((category) => (
+      <Link
+        key={category._id}
+        href={`/blogs/${category.englishTitle}`}
+        className='block  pl-6 py-3  hover:bg-purple-100  custom-transition px-3 '
+      >
+        {category.title}
+      </Link>
+    ));
+  };
 
   return (
     <div className=' rounded-2xl bg-white  overflow-hidden select-none '>
@@ -31,24 +43,7 @@ const Accordion = () => {
         >
           All
         </Link>
-        <Link
-          href='/'
-          className='block  pl-6 py-3  hover:bg-purple-100  custom-transition px-3 '
-        >
-          React
-        </Link>
-        <Link
-          href='/'
-          className='block  pl-6 py-3 hover:bg-purple-100  custom-transition px-3  '
-        >
-          javaScript
-        </Link>
-        <Link
-          href='/'
-          className='block  pl-6 py-3  hover:bg-purple-100  custom-transition px-3 '
-        >
-          Next js
-        </Link>
+        {renderCategories()}
       </div>
     </div>
   );
