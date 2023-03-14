@@ -6,7 +6,7 @@ const MobileCategories = ({ postsCategories }) => {
     return postsCategories.map((category) => (
       <Link
         className='px-5 text-gray-600 py-1 whitespace-nowrap bg-white border border-slate-400 rounded-full '
-        href={`blogs/${category.englishTitle}`}
+        href={`/blogs/${category.englishTitle}`}
         key={category._id}
       >
         {category.title}

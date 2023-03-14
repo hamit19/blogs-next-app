@@ -3,7 +3,7 @@ import { ChevronDownIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
 const Accordion = ({ postsCategories }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const renderCategories = () => {
     return postsCategories.map((category) => (
@@ -38,7 +38,7 @@ const Accordion = ({ postsCategories }) => {
         }`}
       >
         <Link
-          href='/'
+          href='/blogs'
           className='block  pl-6 py-3   hover:bg-purple-100  custom-transition px-3 '
         >
           All

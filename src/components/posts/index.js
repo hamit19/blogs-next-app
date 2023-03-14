@@ -6,6 +6,7 @@ import {
   BookmarkIcon,
   ClockIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 
 // import { HeartIcon } from "@heroicons/react/solid";
 
@@ -13,7 +14,7 @@ const PostList = ({ blogsData }) => {
   const renderPosts = () => {
     return blogsData.docs.map((blog) => (
       <div
-        className='flex flex-col col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'
+        className='flex flex-col max-h-[380px] md:max-h-[330px] col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'
         key={blog._id}
       >
         {/* blogs cover */}
@@ -53,7 +54,9 @@ const PostList = ({ blogsData }) => {
                 </span>
               </div>
               <span className='px-3 py-1 text-xs font-bold text-blue-500 bg-blue-100 rounded-full cursor-pointer hover:bg-blue-500 hover:text-white custom-transition '>
-                {blog.category.title}
+                <Link href={`/blogs/${blog.category.englishTitle}`}>
+                  {blog.category.title}
+                </Link>
               </span>
             </div>
             {/* actions */}
