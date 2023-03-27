@@ -45,11 +45,11 @@ export async function getServerSideProps(context) {
   const { query } = context;
 
   const { data: result } = await axios.get(
-    `http://localhost:5000/api/posts?${queryString.stringify(query)}`
+    `${process.env.API_BASE_URL}/api/posts?${queryString.stringify(query)}`
   );
 
   const { data: postsCategories } = await axios.get(
-    "http://localhost:5000/api/post-category"
+    `${process.env.API_BASE_URL}/api/post-category`
   );
 
   const { data } = result;

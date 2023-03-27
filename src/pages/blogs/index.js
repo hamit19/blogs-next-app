@@ -42,11 +42,11 @@ export default function blogs({ blogsData, postsCategories }) {
 
 export async function getServerSideProps() {
   const { data: result } = await axios.get(
-    "http://localhost:5000/api/posts?page=1&limit=6"
+    `${process.env.API_BASE_URL}/api/posts?page=1&limit=6`
   );
 
   const { data: postsCategories } = await axios.get(
-    "http://localhost:5000/api/post-category"
+    `${process.env.API_BASE_URL}/api/post-category`
   );
 
   const { data } = result;

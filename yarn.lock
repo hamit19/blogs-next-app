@@ -674,7 +674,9 @@ __metadata:
     postcss: ^8.4.21
     query-string: ^8.1.0
     react: 18.2.0
+    react-copy-to-clipboard: ^5.1.0
     react-dom: 18.2.0
+    react-icons: ^4.8.0
     tailwindcss: ^3.2.7
   languageName: unknown
   linkType: soft
@@ -873,6 +875,15 @@ __metadata:
   version: 1.1.0
   resolution: "console-control-strings@npm:1.1.0"
   checksum: 8755d76787f94e6cf79ce4666f0c5519906d7f5b02d4b884cf41e11dcd759ed69c57da0670afd9236d229a46e0f9cf519db0cd829c6dca820bb5a5c3def584ed
+  languageName: node
+  linkType: hard
+
+"copy-to-clipboard@npm:^3.3.1":
+  version: 3.3.3
+  resolution: "copy-to-clipboard@npm:3.3.3"
+  dependencies:
+    toggle-selection: ^1.0.6
+  checksum: e0a325e39b7615108e6c1c8ac110ae7b829cdc4ee3278b1df6a0e4228c490442cc86444cd643e2da344fbc424b3aab8909e2fec82f8bc75e7e5b190b7c24eecf
   languageName: node
   linkType: hard
 
@@ -3196,6 +3207,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-copy-to-clipboard@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "react-copy-to-clipboard@npm:5.1.0"
+  dependencies:
+    copy-to-clipboard: ^3.3.1
+    prop-types: ^15.8.1
+  peerDependencies:
+    react: ^15.3.0 || 16 || 17 || 18
+  checksum: f00a4551b9b63c944a041a6ab46af5ef20ba1106b3bc25173e7ef9bffbfba17a613368682ab8820cfe8d4b3acc5335cd9ce20229145bcc1e6aa8d1db04c512e5
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -3205,6 +3228,15 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
+  languageName: node
+  linkType: hard
+
+"react-icons@npm:^4.8.0":
+  version: 4.8.0
+  resolution: "react-icons@npm:4.8.0"
+  peerDependencies:
+    react: "*"
+  checksum: 4dbba7ad989c295b410e19b2a702722dae44368cb04b6515f9471353552f31ac80bd350f121d5bff79f81504b84039ede44d09e9f035f48bb1032e6eace126c4
   languageName: node
   linkType: hard
 
@@ -3743,6 +3775,13 @@ __metadata:
   dependencies:
     is-number: ^7.0.0
   checksum: f76fa01b3d5be85db6a2a143e24df9f60dd047d151062d0ba3df62953f2f697b16fe5dad9b0ac6191c7efc7b1d9dcaa4b768174b7b29da89d4428e64bc0a20ed
+  languageName: node
+  linkType: hard
+
+"toggle-selection@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "toggle-selection@npm:1.0.6"
+  checksum: a90dc80ed1e7b18db8f4e16e86a5574f87632dc729cfc07d9ea3ced50021ad42bb4e08f22c0913e0b98e3837b0b717e0a51613c65f30418e21eb99da6556a74c
   languageName: node
   linkType: hard
 
