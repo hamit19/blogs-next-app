@@ -5,7 +5,7 @@ import PostInteractions from "../postInteraction";
 
 const PostList = ({ blogsData }) => {
   const renderPosts = () => {
-    return blogsData.docs.map((blog) => (
+    return blogsData.map((blog) => (
       <div
         key={blog._id}
         className='flex flex-col max-h-[380px] md:max-h-[330px] col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'

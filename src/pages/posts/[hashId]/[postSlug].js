@@ -13,6 +13,7 @@ import { FaTelegram, FaLinkedin, FaCopy } from "react-icons/fa";
 import { IoLogoTwitter } from "react-icons/io";
 import CopyToClipboard from "react-copy-to-clipboard";
 import BudgetCopied from "@/components/budgetCopied";
+import PostList from "@/components/posts";
 
 // copyLink helper component!
 const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
@@ -44,9 +45,9 @@ const Post = ({ postData }) => {
   };
 
   return (
-    <div className='container max-w-screen-md m-auto'>
+    <div className='container max-w-screen-xl m-auto'>
       {/* posts header */}
-      <header className='p-4'>
+      <header className='max-w-screen-md p-4 mx-auto'>
         <div className='relative flex flex-col sm:flex-row sm:justify-between'>
           {/* author info */}
           <div className='flex justify-between sm:justify-start'>
@@ -130,7 +131,7 @@ const Post = ({ postData }) => {
           </div>
         </div>
       </header>
-      <article className='w-full p-8 prose sm:max-w-screen-md prose-p:font-medium prose-p:text-base lg:prose-h2:text-2xl prose-headings:text-xl md:prose-headings:text-2xl prose-img:m-0 prose-img:object-cover prose-img:object-center lg:prose-headings:text-3xl prose-img:absolute prose-img:inset-0'>
+      <article className='w-full p-8 mx-auto prose sm:max-w-screen-md prose-p:font-medium prose-p:text-base lg:prose-h2:text-2xl prose-headings:text-xl md:prose-headings:text-2xl prose-img:m-0 prose-img:object-cover prose-img:object-center lg:prose-headings:text-3xl prose-img:absolute prose-img:inset-0'>
         <h1>{postData.title}</h1>
         <h2>1. This is a testing heading!</h2>
         <p>
@@ -180,7 +181,7 @@ const Post = ({ postData }) => {
   };`}
         </pre>
       </article>
-      <section className='px-8'>
+      <section className='max-w-screen-lg px-8 mx-auto'>
         {/* blogs tags section */}
         <ul className='flex flex-wrap items-center gap-2 py-2 '>
           {[
@@ -199,7 +200,6 @@ const Post = ({ postData }) => {
             </li>
           ))}
         </ul>
-
         {/* post interactions buttons  */}
         <div className='flex flex-col items-center gap-3 py-4 sm:flex-row sm:justify-between '>
           <PostInteractions
@@ -243,6 +243,14 @@ const Post = ({ postData }) => {
                 />
               </span>
             </CopyToClipboard>
+          </div>
+        </div>
+        {/* related posts section */}
+        <hr />
+        <div className='max-w-screen-lg mt-10'>
+          <h1 className='mb-6 text-2xl font-medium'>Related Posts</h1>
+          <div className='grid grid-cols-6 gap-6'>
+            <PostList blogsData={postData.related} />
           </div>
         </div>
       </section>

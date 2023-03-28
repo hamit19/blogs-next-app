@@ -23,7 +23,7 @@ export default function blogs({ blogsData, postsCategories }) {
               <Accordion postsCategories={postsCategories} />
             </div>
             {/* mobile categories */}
-            <div className=' flex justify-start items-center gap-3 overflow-auto md:hidden'>
+            <div className='flex items-center justify-start gap-3 overflow-auto  md:hidden'>
               <MobileCategories postsCategories={postsCategories} />
             </div>
 
@@ -31,7 +31,7 @@ export default function blogs({ blogsData, postsCategories }) {
               <Sort />
             </div>
             <div className='grid grid-cols-6 md:col-span-9 gap-y-6 gap-x-10'>
-              <PostList blogsData={blogsData} />
+              <PostList blogsData={blogsData.docs} />
             </div>
           </div>
         </div>
