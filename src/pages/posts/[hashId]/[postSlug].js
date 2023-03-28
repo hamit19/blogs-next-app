@@ -14,6 +14,24 @@ import { IoLogoTwitter } from "react-icons/io";
 import CopyToClipboard from "react-copy-to-clipboard";
 import BudgetCopied from "@/components/budgetCopied";
 
+// copyLink helper component!
+const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
+  <CopyToClipboard
+    text={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/posts/${postData.hashId}/${postData.slug}`}
+    onCopy={() => handleOnCopy()}
+  >
+    <div className='relative w-6 h-6 p-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
+      <LinkIcon />
+      <BudgetCopied
+        key={"first"}
+        copied={copied}
+        firstPosition={"-left-10"}
+        lastPosition={"-left-20"}
+      />
+    </div>
+  </CopyToClipboard>
+);
+
 const Post = ({ postData }) => {
   const [copied, setCopied] = useState(false);
 
@@ -78,9 +96,11 @@ const Post = ({ postData }) => {
                     <SolidBookmarkIcon className='w-4 h-4 ' />
                   )}
                 </div>
-                <div className='w-6 h-6 p-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
-                  <LinkIcon />
-                </div>
+                <CopyLinkComponent
+                  handleOnCopy={handleOnCopy}
+                  copied={copied}
+                  postData={postData}
+                />
               </div>
             </div>
           </div>
@@ -101,24 +121,16 @@ const Post = ({ postData }) => {
                   </>
                 )}
               </div>
-              <CopyToClipboard
-                text={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/posts/${postData.hashId}/${postData.slug}`}
-                onCopy={() => handleOnCopy()}
-              >
-                <div className='w-6 h-6 p-1 relative text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
-                  <LinkIcon />
-                  <BudgetCopied
-                    copied={copied}
-                    firstPosition={"left-0"}
-                    lastPosition={"left-8"}
-                  />
-                </div>
-              </CopyToClipboard>
+              <CopyLinkComponent
+                handleOnCopy={handleOnCopy}
+                copied={copied}
+                postData={postData}
+              />
             </div>
           </div>
         </div>
       </header>
-      <article className='w-full sm:max-w-screen-md p-8 prose prose-p:font-medium prose-p:text-base lg:prose-h2:text-2xl prose-headings:text-xl md:prose-headings:text-2xl prose-img:m-0 prose-img:object-cover prose-img:object-center lg:prose-headings:text-3xl prose-img:absolute prose-img:inset-0'>
+      <article className='w-full p-8 prose sm:max-w-screen-md prose-p:font-medium prose-p:text-base lg:prose-h2:text-2xl prose-headings:text-xl md:prose-headings:text-2xl prose-img:m-0 prose-img:object-cover prose-img:object-center lg:prose-headings:text-3xl prose-img:absolute prose-img:inset-0'>
         <h1>{postData.title}</h1>
         <h2>1. This is a testing heading!</h2>
         <p>
@@ -144,7 +156,7 @@ const Post = ({ postData }) => {
         </p>
 
         <div className='overflow-hidden bg-red-100 aspect-w-16 aspect-h-8 rounded-xl '>
-          <img src={postData.coverImage} fill={true} alt='posts cover' />
+          <img src={postData.coverImage} alt='posts cover' />
         </div>
 
         <h2>3. This is a testing heading!</h2>
@@ -170,7 +182,7 @@ const Post = ({ postData }) => {
       </article>
       <section className='px-8'>
         {/* blogs tags section */}
-        <ul className='flex flex-wrap items-center gap-2  py-2 '>
+        <ul className='flex flex-wrap items-center gap-2 py-2 '>
           {[
             "vue.js",
             "react js",
@@ -180,7 +192,7 @@ const Post = ({ postData }) => {
             "front-end developing",
           ].map((tag) => (
             <li
-              className='bg-white border border-blue-300 rounded-full px-2 py-1 text-xs'
+              className='px-2 py-1 text-xs bg-white border border-blue-300 rounded-full'
               key={tag}
             >
               {tag}
@@ -189,14 +201,14 @@ const Post = ({ postData }) => {
         </ul>
 
         {/* post interactions buttons  */}
-        <div className='flex items-center flex-col py-4  gap-3 sm:flex-row sm:justify-between '>
+        <div className='flex flex-col items-center gap-3 py-4 sm:flex-row sm:justify-between '>
           <PostInteractions
             blog={postData}
             className='justify-around w-full sm:w-auto'
           />
 
-          <div className='flex justify-between items-center sm:justify-start sm:gap-3 w-full sm:w-auto p-4'>
-            <div className='flex text-2xl text-gray-500 gap-5 '>
+          <div className='flex items-center justify-between w-full p-4 sm:justify-start sm:gap-3 sm:w-auto'>
+            <div className='flex gap-5 text-2xl text-gray-500 '>
               <a
                 className='hover:text-blue-600 custom-transition'
                 href={`https://telegram.me/share/url?url=${process.env.NEXT_PUBLIC_DOMAIN_URL}/posts/${postData.hashId}/${postData.slug}&text=${postData.title}`}
@@ -220,13 +232,14 @@ const Post = ({ postData }) => {
               text={`${process.env.NEXT_PUBLIC_DOMAIN_URL}/posts/${postData.hashId}/${postData.slug}`}
               onCopy={() => handleOnCopy()}
             >
-              <span className='relative z-20 whitespace-nowrap hover:bg-blue-500 hover:text-white cursor-pointer custom-transition  flex gap-2 text-blue-600 items-center rounded-md font-medium  px-3 py-1 text-sm bg-white'>
+              <span className='relative z-20 flex items-center gap-2 px-3 py-1 text-sm font-medium text-blue-600 bg-white rounded-md cursor-pointer whitespace-nowrap hover:bg-blue-500 hover:text-white custom-transition'>
                 <FaCopy />
                 Copy link
                 <BudgetCopied
+                  key={"seconde"}
                   copied={copied}
                   firstPosition={"top-0"}
-                  lastPosition={"-top-8"}
+                  lastPosition={"-top-9"}
                 />
               </span>
             </CopyToClipboard>
