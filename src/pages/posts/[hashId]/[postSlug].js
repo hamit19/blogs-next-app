@@ -14,6 +14,8 @@ import { IoLogoTwitter } from "react-icons/io";
 import CopyToClipboard from "react-copy-to-clipboard";
 import BudgetCopied from "@/components/budgetCopied";
 import PostList from "@/components/posts";
+import PostComments from "@/components/postComments";
+import toLocalDate from "@/utils/toLocalDate";
 
 // copyLink helper component!
 const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
@@ -71,7 +73,7 @@ const Post = ({ postData }) => {
                   {/* release date and reading info of the post */}
                   <div className='flex items-center justify-center gap-2'>
                     <span className='text-xs text-gray-400'>
-                      {new Date(postData.createdAt).toLocaleDateString("en-US")}
+                      {toLocalDate(postData.createdAt)}
                     </span>
                     <span>&bull;</span>
                     <span className='text-xs text-gray-500'>
@@ -247,12 +249,14 @@ const Post = ({ postData }) => {
         </div>
         {/* related posts section */}
         <hr />
-        <div className='max-w-screen-lg mt-10'>
+        <div className='max-w-screen-lg my-10'>
           <h1 className='mb-6 text-2xl font-medium'>Related Posts</h1>
           <div className='grid grid-cols-6 gap-6'>
             <PostList blogsData={postData.related} />
           </div>
         </div>
+        <hr />
+        <PostComments post={postData} />
       </section>
     </div>
   );
