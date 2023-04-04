@@ -10,9 +10,7 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className=' bg-slate-50'>
-        <Link href={"/blogs"}>Click here to redirect to Blogs page!</Link>
-      </main>
+      <main className=' bg-slate-50'></main>
     </>
   );
 }

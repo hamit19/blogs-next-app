@@ -15,7 +15,7 @@ export default function blogs({ blogsData, postsCategories }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className=' bg-slate-50'>
+      <div className='bg-slate-50'>
         <div className='container mx-auto lg:max-w-screen-xl'>
           <div className='grid md:grid-cols-12 grid-rows-[70px_minmax(300px,_1fr)] gap-8 p-4 min-h-screen'>
             {/* desktop categories */}
@@ -23,7 +23,7 @@ export default function blogs({ blogsData, postsCategories }) {
               <Accordion postsCategories={postsCategories} />
             </div>
             {/* mobile categories */}
-            <div className='flex items-center justify-start gap-3 overflow-auto  md:hidden'>
+            <div className='flex items-center justify-start gap-3 overflow-auto md:hidden'>
               <MobileCategories postsCategories={postsCategories} />
             </div>
 
@@ -35,7 +35,7 @@ export default function blogs({ blogsData, postsCategories }) {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }

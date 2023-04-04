@@ -183,7 +183,7 @@ const Post = ({ postData }) => {
   };`}
         </pre>
       </article>
-      <section className='max-w-screen-lg px-8 mx-auto'>
+      <section className='max-w-screen-lg px-8 mx-auto '>
         {/* blogs tags section */}
         <ul className='flex flex-wrap items-center gap-2 py-2 '>
           {[
