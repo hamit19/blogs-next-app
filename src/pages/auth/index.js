@@ -136,9 +136,9 @@ const Auth = () => {
 
   return (
     <div className='grid h-[90vh] lg:grid-cols-6'>
-      <div className='relative hidden col-span-3 rounded-r-[60px] shadow-2xl lg:flex lg:items-center lg:justify-center bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500'>
-        <div className=''>
-          <h1 className='text-6xl font-extrabold text-gray-50 font-custom-font'>
+      <div className='relative hidden col-span-3 rounded-r-[60px] shadow-2xl lg:flex lg:items-center lg:justify-start xl:justify-center bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500'>
+        <div className='ml-16 xl:m-0'>
+          <h1 className='mb-5 text-6xl font-extrabold text-gray-50 font-custom-font'>
             {isSignUp ? "Sign Up" : "Sign In"}
           </h1>
           <Image
@@ -146,6 +146,14 @@ const Auth = () => {
             alt={"auth vector"}
             width={400}
             height={400}
+            className='hidden xl:block'
+          />
+          <Image
+            src={"/images/auth.png"}
+            alt={"auth vector"}
+            width={300}
+            height={300}
+            className='hidden lg:block xl:hidden'
           />
         </div>
       </div>
