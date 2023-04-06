@@ -61,7 +61,7 @@ const Auth = () => {
   const renderAuthForm = () => {
     return (
       <form
-        className='w-3/4  sm:w-[420px] h-min-3/4 relative lg:right-60 top-1/2  -translate-y-1/2 px-4 py-6 mx-auto flex flex-col gap-4 bg-white rounded-2xl shadow-xl'
+        className='w-3/4  sm:w-[430px] h-min-3/4 relative lg:right-72 top-1/2  -translate-y-1/2 px-6 py-6 mx-auto flex flex-col gap-4 bg-white rounded-3xl shadow-xl'
         onSubmit={handleSubmit}
       >
         {isSignUp && (
@@ -102,7 +102,7 @@ const Auth = () => {
 
         <button
           type='submit'
-          className='py-2 text-sm font-medium text-white bg-indigo-400 rounded-md disabled:cursor-not-allowed disabled:bg-gray-400 hover:bg-indigo-500 hover:shadow-xl custom-transition'
+          className='py-3 text-sm font-medium text-white bg-indigo-400 rounded-xl disabled:cursor-not-allowed disabled:bg-gray-400 hover:bg-indigo-500 hover:shadow-xl custom-transition'
           disabled={!formik.isValid}
         >
           {" "}
@@ -136,12 +136,18 @@ const Auth = () => {
 
   return (
     <div className='grid h-[90vh] lg:grid-cols-6'>
-      <div className='relative hidden col-span-3 shadow-2xl lg:block rounded-r-3xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500'>
-        {isSignUp ? (
-          <h1 className='text-5xl font-extrabold text-shadow-lg'>Sign In</h1>
-        ) : (
-          <h1> Sign Up </h1>
-        )}
+      <div className='relative hidden col-span-3 rounded-r-[60px] shadow-2xl lg:flex lg:items-center lg:justify-center bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500'>
+        <div className=''>
+          <h1 className='text-6xl font-extrabold text-gray-50 font-custom-font'>
+            {isSignUp ? "Sign Up" : "Sign In"}
+          </h1>
+          <Image
+            src={"/images/auth.png"}
+            alt={"auth vector"}
+            width={400}
+            height={400}
+          />
+        </div>
       </div>
       <div className='col-span-3'>{renderAuthForm()}</div>
     </div>
