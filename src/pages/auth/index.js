@@ -1,14 +1,18 @@
 import InputComponent from "@/components/inputComponent";
+import axios from "axios";
 import { useFormik } from "formik";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import * as Yup from "yup";
 
 const SignUpInitialValues = {
-  fullName: "",
+  name: "",
   email: "",
   phoneNumber: "",
   password: "",
+  passwordConfirm: "",
 };
 
 const SignInInitialValues = {
@@ -17,17 +21,23 @@ const SignInInitialValues = {
 };
 
 const SignUpValidationSchema = Yup.object({
-  fullName: Yup.string().required("full name is required!"),
+  name: Yup.string()
+    .min(6, "the name should be longer than 6 characters!")
+    .required("full name is required!"),
   email: Yup.string().email("email is invalid!").required("email is required!"),
   phoneNumber: Yup.string()
     .required("Phone number is required!")
     .matches(/^[0-9]{11}$/, "phone number is invalid!"),
   password: Yup.string()
+    .min(6, "password must be longer than 6 characters!")
     .required("password is required!")
     .matches(
       /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-      "password must be contained at least one digit, one uppercase letter and one special sign!"
+      "password must be contained at least one digit,and one special sign!"
     ),
+  passwordConfirm: Yup.string()
+    .required("password confirmation is required!")
+    .oneOf([Yup.ref("password"), null], "passwords must be match!"),
 });
 
 const SignInValidationSchema = Yup.object({
@@ -38,6 +48,8 @@ const SignInValidationSchema = Yup.object({
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: !isSignUp ? SignInInitialValues : SignUpInitialValues,
     validationSchema: isSignUp
@@ -47,16 +59,37 @@ const Auth = () => {
     enableReinitialize: true,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formik.values);
+
+    const { name, email, password, phoneNumber } = formik.values;
+
+    try {
+      const { data } = await axios.post(
+        `http://localhost:5000/api/user/${isSignUp ? "signup" : "signin"}`,
+        { name, email, password, phoneNumber },
+        { withCredentials: true }
+      );
+      formik.resetForm();
+
+      toast.success("You've logged in successfully");
+
+      isSignUp ? setIsSignUp(!isSignUp) : router.push("/");
+
+      console.log(data);
+    } catch (error) {
+      toast.error(
+        error.response.data.message && "The email or password is incorrect!"
+      );
+      console.log(error);
+    }
   };
 
   const handleChange = () => {
     setIsSignUp(!isSignUp);
     formik.resetForm();
   };
-
-  console.log(formik);
 
   const renderAuthForm = () => {
     return (
@@ -66,11 +99,11 @@ const Auth = () => {
       >
         {isSignUp && (
           <InputComponent
-            key={"fullName"}
+            key={"name"}
             label='Name'
             placeholder={"for example: (John Smith)"}
             formik={formik}
-            name='fullName'
+            name='name'
           />
         )}
 
@@ -99,6 +132,19 @@ const Auth = () => {
           name='password'
           type='password'
         />
+
+        {isSignUp && (
+          <InputComponent
+            key={"passwordConfirm"}
+            label='Password Confirmation'
+            placeholder={
+              "for example: (whatever you've entered the password field!)"
+            }
+            formik={formik}
+            name='passwordConfirm'
+            type='password'
+          />
+        )}
 
         <button
           type='submit'

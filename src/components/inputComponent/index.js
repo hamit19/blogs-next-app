@@ -14,7 +14,7 @@ const InputComponent = ({
           {label}
         </label>
         {formik.errors[name] && formik.touched[name] && (
-          <span className='text-xs font-medium text-rose-400 '>
+          <span className='pl-4 text-xs font-medium text-rose-400 '>
             *{formik.errors[name]}
           </span>
         )}
