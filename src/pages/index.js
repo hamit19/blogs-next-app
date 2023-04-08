@@ -10,6 +10,10 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <div className='h-screen text-5xl text-center pt-20 font-medium font-custom-font text-gray-500 '>
+        <h1>Welcome to the blogs next js app!</h1>
+        <h2 className='pt-10'>Home Page!</h2>
+      </div>
     </>
   );
 }

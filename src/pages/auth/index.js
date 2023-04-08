@@ -1,10 +1,9 @@
 import InputComponent from "@/components/inputComponent";
-import axios from "axios";
+import { useAuth, useAuthActions } from "@/context/authContext";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
 import * as Yup from "yup";
 
 const SignUpInitialValues = {
@@ -48,6 +47,10 @@ const SignInValidationSchema = Yup.object({
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
+  const dispatch = useAuthActions();
+
+  const { user } = useAuth();
+
   const router = useRouter();
 
   const formik = useFormik({
@@ -61,30 +64,26 @@ const Auth = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formik.values);
 
     const { name, email, password, phoneNumber } = formik.values;
 
-    try {
-      const { data } = await axios.post(
-        `http://localhost:5000/api/user/${isSignUp ? "signup" : "signin"}`,
-        { name, email, password, phoneNumber },
-        { withCredentials: true }
-      );
-      formik.resetForm();
-
-      toast.success("You've logged in successfully");
-
-      isSignUp ? setIsSignUp(!isSignUp) : router.push("/");
-
-      console.log(data);
-    } catch (error) {
-      toast.error(
-        error.response.data.message && "The email or password is incorrect!"
-      );
-      console.log(error);
-    }
+    isSignUp
+      ? dispatch({
+          type: "SIGNUP",
+          payload: { name, email, password, phoneNumber },
+        })
+      : dispatch({
+          type: "SIGNIN",
+          payload: { email, password },
+        });
   };
+
+  useEffect(() => {
+    if (user) {
+      formik.resetForm();
+      router.push("/");
+    }
+  }, [user]);
 
   const handleChange = () => {
     setIsSignUp(!isSignUp);
