@@ -79,7 +79,7 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user?._id) {
       formik.resetForm();
       router.push("/");
     }

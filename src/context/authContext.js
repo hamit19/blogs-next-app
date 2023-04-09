@@ -28,9 +28,11 @@ const reducer = (state, actions) => {
     case "LOGOUT_PENDING":
       return { ...state, loading: true };
 
-    case "LOGOUT":
-      return { ...state, user: null, loading: false };
+    case "LOGOUT_SUCCESS":
+      return { ...state, user: actions.payload, loading: false };
 
+    case "LOGOUT_REJECTED":
+      return { ...state, error: actions.error, loading: false };
     default:
       return { ...state };
   }
@@ -54,7 +56,6 @@ const asyncActionHandlers = {
         toast.success("You've logged in successfully");
 
         Router.push("/");
-        console.log(data);
       } catch (err) {
         dispatch({ type: "SIGN_IN_REJECTED", error: err });
 
@@ -109,11 +110,15 @@ const asyncActionHandlers = {
       dispatch({ type: "LOGOUT_PENDING" });
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/user/logout"
+          "http://localhost:5000/api/user/logout",
+          { withCredentials: true }
         );
-
-        dispatch({ type: "LOGOUT" });
-      } catch (err) {}
+        dispatch({ type: "LOGOUT_SUCCESS", payload: data });
+        Router.push("/");
+      } catch (err) {
+        console.log(err);
+        dispatch({ type: "LOGOUT_REJECTED", error: err });
+      }
     },
 };
 

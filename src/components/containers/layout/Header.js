@@ -1,11 +1,27 @@
-import { useAuth } from "@/context/authContext";
+import { useAuth, useAuthActions } from "@/context/authContext";
+import { UserCircleIcon } from "@heroicons/react/outline";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
+import ProfileOptions from "./ProfileOptions";
+import Router from "next/router";
 
-const Header = () => {
+const Header = ({ isShow, setIsShow }) => {
   const { user } = useAuth();
 
-  console.log(user);
+  const dispatch = useAuthActions();
+
+  const options = [
+    {
+      label: "Profile",
+      action: "/profile",
+      link: true,
+    },
+    {
+      label: "Sign out",
+      action: () => dispatch({ type: "LOGOUT" }),
+      link: false,
+    },
+  ];
 
   return (
     <header className='sticky top-0 left-0 right-0 z-50 flex justify-between w-full px-10 py-4 bg-white shadow-md'>
@@ -18,10 +34,23 @@ const Header = () => {
         </li>
       </ul>
       <div className='text-sm font-medium '>
-        {!user ? (
+        {!user?._id ? (
           <Link href='/auth'>Sign Up/Sing In</Link>
         ) : (
-          <Link href='/profile'>Profile</Link>
+          <div
+            className='relative '
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsShow(!isShow);
+            }}
+          >
+            <UserCircleIcon
+              className='cursor-pointer stroke-gray-500'
+              with={30}
+              height={30}
+            />
+            <ProfileOptions options={options} isShow={isShow} />
+          </div>
         )}
       </div>
     </header>
