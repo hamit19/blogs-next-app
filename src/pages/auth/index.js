@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import * as Yup from "yup";
 
 const SignUpInitialValues = {
@@ -49,7 +50,7 @@ const Auth = () => {
 
   const dispatch = useAuthActions();
 
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const router = useRouter();
 
@@ -150,8 +151,23 @@ const Auth = () => {
           className='py-3 text-sm font-medium text-white bg-indigo-400 rounded-xl disabled:cursor-not-allowed disabled:bg-gray-400 hover:bg-indigo-500 hover:shadow-xl custom-transition'
           disabled={!formik.isValid}
         >
-          {" "}
-          {isSignUp ? "Sign Up" : "Sign In"}{" "}
+          {loading ? (
+            <ThreeDots
+              wrapperStyle={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+              width={40}
+              height={20}
+              radius={10}
+              color={"white"}
+            />
+          ) : isSignUp ? (
+            "Sign Up"
+          ) : (
+            "Sign In"
+          )}
         </button>
 
         {isSignUp ? (
