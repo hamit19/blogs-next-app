@@ -6,7 +6,7 @@ import ProfileOptions from "./ProfileOptions";
 import Router from "next/router";
 
 const Header = ({ isShow, setIsShow }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const dispatch = useAuthActions();
 
@@ -33,7 +33,11 @@ const Header = ({ isShow, setIsShow }) => {
           <Link href='/blogs'>Blogs</Link>
         </li>
       </ul>
-      <div className='text-sm font-medium '>
+      <div
+        className={`text-sm font-medium custom-transition ${
+          loading ? "opacity-0" : "opacity-100"
+        } `}
+      >
         {!user?._id ? (
           <Link href='/auth'>Sign Up/Sing In</Link>
         ) : (
