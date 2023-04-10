@@ -5,6 +5,7 @@ import axios from "axios";
 import PostList from "@/components/posts";
 import MobileCategories from "@/components/mobileCategories";
 import queryString from "query-string";
+import http from "@/services/httpServices";
 
 export default function blogCategories({ blogsData, postsCategories }) {
   return (
@@ -42,15 +43,18 @@ export default function blogCategories({ blogsData, postsCategories }) {
 }
 
 export async function getServerSideProps(context) {
-  const { query } = context;
+  const { query, req } = context;
 
-  const { data: result } = await axios.get(
-    `${process.env.API_BASE_URL}/api/posts?${queryString.stringify(query)}`
+  const { data: result } = await http.get(
+    `/api/posts?${queryString.stringify(query)}`,
+    {
+      headers: {
+        Cookie: req.headers.cookie || "",
+      },
+    }
   );
 
-  const { data: postsCategories } = await axios.get(
-    `${process.env.API_BASE_URL}/api/post-category`
-  );
+  const { data: postsCategories } = await http.get(`/api/post-category`);
 
   const { data } = result;
 

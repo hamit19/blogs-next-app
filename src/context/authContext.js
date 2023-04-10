@@ -1,8 +1,8 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { toast } from "react-hot-toast";
 import { useReducerAsync } from "use-reducer-async";
 import Router from "next/router";
+import http from "@/services/httpServices";
 
 const AuthContext = createContext();
 
@@ -45,11 +45,7 @@ const asyncActionHandlers = {
       dispatch({ type: "SIGN_IN_PENDING" });
 
       try {
-        const { data } = await axios.post(
-          `http://localhost:5000/api/user/signin`,
-          action.payload,
-          { withCredentials: true }
-        );
+        const { data } = await http.post(`/api/user/signin`, action.payload);
 
         dispatch({ type: "SIGN_IN_SUCCESS", payload: data });
 
@@ -69,11 +65,7 @@ const asyncActionHandlers = {
     async (action) => {
       dispatch({ type: "SIGN_IN_PENDING" });
       try {
-        const { data } = await axios.post(
-          "http://localhost:5000/api/user/signup",
-          action.payload,
-          { withCredentials: true }
-        );
+        const { data } = await http.post("/api/user/signup", action.payload);
         dispatch({ type: "SIGN_IN_SUCCESS", payload: data });
 
         toast.success("You've signed up successfully!");
@@ -81,6 +73,7 @@ const asyncActionHandlers = {
         Router.push("/");
       } catch (err) {
         dispatch({ type: "SIGN_IN_REJECTED", error: err });
+        console.log(err);
 
         err.response.data?.message &&
           toast.error("something went wrong please try again!");
@@ -93,10 +86,7 @@ const asyncActionHandlers = {
       dispatch({ type: "SIGN_IN_PENDING" });
 
       try {
-        const { data } = await axios.get(
-          "http://localhost:5000/api/user/load",
-          { withCredentials: true }
-        );
+        const { data } = await http.get("/api/user/load");
 
         dispatch({ type: "SIGN_IN_SUCCESS", payload: data });
       } catch (err) {
@@ -109,10 +99,7 @@ const asyncActionHandlers = {
     async (action) => {
       dispatch({ type: "LOGOUT_PENDING" });
       try {
-        const { data } = await axios.get(
-          "http://localhost:5000/api/user/logout",
-          { withCredentials: true }
-        );
+        const { data } = await http.get("/api/user/logout");
         dispatch({ type: "LOGOUT_SUCCESS", payload: data });
         Router.push("/");
       } catch (err) {

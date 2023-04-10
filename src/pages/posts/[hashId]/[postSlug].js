@@ -16,6 +16,7 @@ import BudgetCopied from "@/components/budgetCopied";
 import PostList from "@/components/posts";
 import PostComments from "@/components/postComments";
 import toLocalDate from "@/utils/toLocalDate";
+import http from "@/services/httpServices";
 
 // copyLink helper component!
 const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
@@ -28,7 +29,7 @@ const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
       <BudgetCopied
         key={"first"}
         copied={copied}
-        firstPosition={"-left-10"}
+        firstPosition={"-left-0"}
         lastPosition={"-left-20"}
       />
     </div>
@@ -92,11 +93,11 @@ const Post = ({ postData }) => {
                 </Link>
               </span>
               <div className='flex self-end gap-3 sm:hidden'>
-                <div className='w-6 h-6 p-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
+                <div className='w-8 h-6 px-4 py-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
                   {!postData.isBookmarked ? (
                     <BookmarkIcon className='w-4 h-4 mr-2' />
                   ) : (
-                    <SolidBookmarkIcon className='w-4 h-4 ' />
+                    <SolidBookmarkIcon className='w-4 h-4 mr-2' />
                   )}
                 </div>
                 <CopyLinkComponent
@@ -111,7 +112,7 @@ const Post = ({ postData }) => {
           {/* post status */}
           <div>
             <div className='hidden gap-3 sm:flex'>
-              <div className='flex items-center justify-center w-16 h-6 gap-2 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
+              <div className='flex items-center justify-center w-[5rem] h-6 gap-2 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
                 {!postData.isBookmarked ? (
                   <>
                     <span className='mb-1'>save</span>
@@ -265,13 +266,15 @@ const Post = ({ postData }) => {
 export default Post;
 
 export async function getServerSideProps(context) {
-  const { query } = context;
+  const { query, req } = context;
 
   const {
     data: { data },
-  } = await axios.get(
-    `${process.env.API_BASE_URL}/api/posts/${query.postSlug}`
-  );
+  } = await http.get(`/api/posts/${query.postSlug}`, {
+    headers: {
+      Cookie: req.headers.cookie,
+    },
+  });
 
   return {
     props: {

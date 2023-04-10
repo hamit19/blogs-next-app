@@ -1,9 +1,8 @@
 import { useAuth, useAuthActions } from "@/context/authContext";
 import { UserCircleIcon } from "@heroicons/react/outline";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import ProfileOptions from "./ProfileOptions";
-import Router from "next/router";
 
 const Header = ({ isShow, setIsShow }) => {
   const { user, loading } = useAuth();

@@ -5,6 +5,7 @@ import Sort from "@/components/sort-tab";
 import axios from "axios";
 import PostList from "@/components/posts";
 import MobileCategories from "@/components/mobileCategories";
+import http from "@/services/httpServices";
 
 export default function blogs({ blogsData, postsCategories }) {
   return (
@@ -40,14 +41,14 @@ export default function blogs({ blogsData, postsCategories }) {
   );
 }
 
-export async function getServerSideProps() {
-  const { data: result } = await axios.get(
-    `${process.env.API_BASE_URL}/api/posts?page=1&limit=6`
-  );
+export async function getServerSideProps({ req }) {
+  const { data: result } = await http.get(`/api/posts?page=1&limit=6`, {
+    headers: {
+      Cookie: req.headers.cookie || "",
+    },
+  });
 
-  const { data: postsCategories } = await axios.get(
-    `${process.env.API_BASE_URL}/api/post-category`
-  );
+  const { data: postsCategories } = await http.get(`/api/post-category`);
 
   const { data } = result;
 

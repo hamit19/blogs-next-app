@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ChatAltIcon,
   HeartIcon,
@@ -10,8 +10,42 @@ import {
   HeartIcon as SolidHeartIcon,
   BookmarkIcon as SolidBookmarkIcon,
 } from "@heroicons/react/solid";
+import { useAuth } from "@/context/authContext";
+import { toast } from "react-hot-toast";
+import axios from "axios";
 
 const PostInteractions = ({ blog, isSmall, className }) => {
+  const { user } = useAuth();
+
+  const [interActions, setInterActions] = useState({
+    isLiked: blog.isLiked,
+    isBookmarked: blog.isBookmarked,
+  });
+
+  const handleLike = async () => {
+    if (!user?._id) {
+      toast.error("You must be logged in first!");
+    }
+
+    try {
+      const { data } = await axios(
+        `http://localhost:5000/api/posts/like/${blog._id}`,
+        {
+          method: "PUT",
+          withCredentials: true,
+        }
+      );
+
+      data.message === "Unliked!"
+        ? setInterActions({ ...interActions, isLike: false })
+        : setInterActions({ ...interActions, isLike: true });
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className='flex items-center justify-between w-full py-2 sm:justify-start'>
       <div
@@ -25,8 +59,11 @@ const PostInteractions = ({ blog, isSmall, className }) => {
             {blog.commentsCount}
           </span>
         </button>
-        <button className='flex items-center justify-center h-6 gap-1 p-1 rounded-md cursor-pointer w-11 bg-rose-200 custom-transition hover:text-white hover:bg-rose-600 text-rose-600'>
-          {!blog.isLiked ? (
+        <button
+          onClick={() => handleLike()}
+          className='flex items-center justify-center h-6 gap-1 p-1 rounded-md cursor-pointer w-11 bg-rose-200 custom-transition hover:text-white hover:bg-rose-600 text-rose-600'
+        >
+          {!interActions.isLiked ? (
             <HeartIcon className='w-4 h-4' />
           ) : (
             <SolidHeartIcon className='w-4 h-4 ' />
