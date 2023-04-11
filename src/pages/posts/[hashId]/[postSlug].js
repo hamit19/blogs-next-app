@@ -17,6 +17,9 @@ import PostList from "@/components/posts";
 import PostComments from "@/components/postComments";
 import toLocalDate from "@/utils/toLocalDate";
 import http from "@/services/httpServices";
+import handleBookmark from "@/utils/handleBookmark";
+import { useRouter } from "next/router";
+import { useAuth } from "@/context/authContext";
 
 // copyLink helper component!
 const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
@@ -26,18 +29,17 @@ const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
   >
     <div className='relative w-6 h-6 p-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
       <LinkIcon />
-      <BudgetCopied
-        key={"first"}
-        copied={copied}
-        firstPosition={"-left-0"}
-        lastPosition={"-left-20"}
-      />
+      <BudgetCopied key={"first"} copied={copied} />
     </div>
   </CopyToClipboard>
 );
 
 const Post = ({ postData }) => {
   const [copied, setCopied] = useState(false);
+
+  const router = useRouter();
+
+  const { user } = useAuth();
 
   const handleOnCopy = () => {
     setCopied(true);
@@ -93,13 +95,16 @@ const Post = ({ postData }) => {
                 </Link>
               </span>
               <div className='flex self-end gap-3 sm:hidden'>
-                <div className='w-8 h-6 px-4 py-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
+                <button
+                  onClick={() => handleBookmark(postData._id, user, router)}
+                  className='w-6 h-6 p-1 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'
+                >
                   {!postData.isBookmarked ? (
                     <BookmarkIcon className='w-4 h-4 mr-2' />
                   ) : (
-                    <SolidBookmarkIcon className='w-4 h-4 mr-2' />
+                    <SolidBookmarkIcon className='w-4 h-4 ' />
                   )}
-                </div>
+                </button>
                 <CopyLinkComponent
                   handleOnCopy={handleOnCopy}
                   copied={copied}
@@ -112,7 +117,10 @@ const Post = ({ postData }) => {
           {/* post status */}
           <div>
             <div className='hidden gap-3 sm:flex'>
-              <div className='flex items-center justify-center w-[5rem] h-6 gap-2 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
+              <button
+                onClick={() => handleBookmark(postData._id, user, router)}
+                className='flex items-center justify-center w-[5rem] h-6 gap-2 text-blue-600 bg-white rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'
+              >
                 {!postData.isBookmarked ? (
                   <>
                     <span className='mb-1'>save</span>
@@ -124,7 +132,7 @@ const Post = ({ postData }) => {
                     <SolidBookmarkIcon className='w-4 h-4 ' />
                   </>
                 )}
-              </div>
+              </button>
               <CopyLinkComponent
                 handleOnCopy={handleOnCopy}
                 copied={copied}

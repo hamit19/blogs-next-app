@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ChatAltIcon,
   HeartIcon,
@@ -13,34 +13,30 @@ import {
 import { useAuth } from "@/context/authContext";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import http from "@/services/httpServices";
+import { useRouter } from "next/router";
+import handleBookmark from "@/utils/handleBookmark";
+import routerPush from "@/utils/routerPush";
 
 const PostInteractions = ({ blog, isSmall, className }) => {
   const { user } = useAuth();
 
-  const [interActions, setInterActions] = useState({
-    isLiked: blog.isLiked,
-    isBookmarked: blog.isBookmarked,
-  });
+  const router = useRouter();
 
   const handleLike = async () => {
     if (!user?._id) {
-      toast.error("You must be logged in first!");
+      toast.error("Please sign in first!");
+      return;
     }
 
     try {
-      const { data } = await axios(
-        `http://localhost:5000/api/posts/like/${blog._id}`,
-        {
-          method: "PUT",
-          withCredentials: true,
-        }
+      const { data } = await http.put(
+        `http://localhost:5000/api/posts/like/${blog._id}`
       );
 
-      data.message === "Unliked!"
-        ? setInterActions({ ...interActions, isLike: false })
-        : setInterActions({ ...interActions, isLike: true });
+      !data.liked ? toast.error(data.message) : toast.success(data.message);
 
-      console.log(data);
+      routerPush(router);
     } catch (err) {
       console.log(err);
     }
@@ -63,14 +59,17 @@ const PostInteractions = ({ blog, isSmall, className }) => {
           onClick={() => handleLike()}
           className='flex items-center justify-center h-6 gap-1 p-1 rounded-md cursor-pointer w-11 bg-rose-200 custom-transition hover:text-white hover:bg-rose-600 text-rose-600'
         >
-          {!interActions.isLiked ? (
+          {!blog.isLiked ? (
             <HeartIcon className='w-4 h-4' />
           ) : (
             <SolidHeartIcon className='w-4 h-4 ' />
           )}
           <span className='text-xs font-bold'>{blog.likesCount}</span>
         </button>
-        <button className='w-6 h-6 p-1 text-blue-600 bg-blue-200 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'>
+        <button
+          onClick={() => handleBookmark(blog._id, user, router)}
+          className='w-6 h-6 p-1 text-blue-600 bg-blue-200 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white custom-transition'
+        >
           {!blog.isBookmarked ? (
             <BookmarkIcon className='w-4 h-4 mr-2' />
           ) : (

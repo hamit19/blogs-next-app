@@ -1,8 +1,6 @@
 import Head from "next/head";
 import Accordion from "@/components/accordion";
 import Sort from "@/components/sort-tab";
-
-import axios from "axios";
 import PostList from "@/components/posts";
 import MobileCategories from "@/components/mobileCategories";
 import http from "@/services/httpServices";
