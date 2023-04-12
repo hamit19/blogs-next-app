@@ -4,6 +4,7 @@ import Sort from "@/components/sort-tab";
 import PostList from "@/components/posts";
 import MobileCategories from "@/components/mobileCategories";
 import http from "@/services/httpServices";
+import queryString from "query-string";
 
 export default function blogs({ blogsData, postsCategories }) {
   return (
@@ -39,12 +40,17 @@ export default function blogs({ blogsData, postsCategories }) {
   );
 }
 
-export async function getServerSideProps({ req }) {
-  const { data: result } = await http.get(`/api/posts?page=1&limit=6`, {
-    headers: {
-      Cookie: req.headers.cookie || "",
-    },
-  });
+export async function getServerSideProps({ req, query }) {
+  console.log(query);
+
+  const { data: result } = await http.get(
+    `/api/posts?${queryString.stringify(query)}`,
+    {
+      headers: {
+        Cookie: req.headers.cookie || "",
+      },
+    }
+  );
 
   const { data: postsCategories } = await http.get(`/api/post-category`);
 
