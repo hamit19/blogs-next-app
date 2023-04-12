@@ -31,12 +31,12 @@ const PostComments = ({ post }) => {
 
   return (
     <div>
-      <h3 className='font-medium text-md text-gray-600 py-7 '>Comments</h3>
-      <div className='w-full flex flex-col pb-8 '>{renderComments()}</div>
+      <h3 className='font-medium text-gray-600 text-md py-7 '>Comments</h3>
+      <div className='flex flex-col w-full pb-8 '>{renderComments()}</div>
 
       {/* new comment form */}
-      <div>
-        <h3 className='font-medium text-lg text-gray-700'>
+      <div className='p-4 mb-8 bg-white rounded-xl '>
+        <h3 className='text-lg font-medium text-gray-700'>
           Leave a new comment
         </h3>
         <Form value={value} setValue={setValue} onSubmit={onSubmitHandler} />

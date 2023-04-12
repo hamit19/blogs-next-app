@@ -15,10 +15,10 @@ const SingleComment = ({ comment }) => {
   };
 
   return (
-    <div className='w-full my-2 shadow-md shadow-slate-100 bg-white rounded-lg p-4 '>
+    <div className='w-full p-4 my-2 bg-white rounded-lg shadow-lg '>
       {/* user info */}
-      <div className='flex gap-2 items-center'>
-        <div className='w-8 h-8 bg-white rounded-full flex items-center justify-center border'>
+      <div className='flex items-center gap-2 pb-3 border-b border-b-gray-100'>
+        <div className='flex items-center justify-center w-8 h-8 bg-white border rounded-full'>
           <UserIcon className='w-5 h-5 stroke-gray-600 ' />
         </div>
         <div className='flex flex-col text-xs text-gray-600'>
@@ -31,7 +31,7 @@ const SingleComment = ({ comment }) => {
         <p>{comment.content}</p>
       </div>
       <div
-        className='text-xs  w-11 cursor-pointer select-none text-gray-500 font-medium'
+        className='text-xs font-medium text-gray-500 cursor-pointer select-none w-11'
         onClick={() => setIsOnReplay(!isOnReplay)}
       >
         {!isOnReplay ? (
