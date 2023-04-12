@@ -5,19 +5,9 @@ import PostList from "@/components/posts";
 import MobileCategories from "@/components/mobileCategories";
 import http from "@/services/httpServices";
 import queryString from "query-string";
-import { Pagination } from "@mui/material";
-import { useRouter } from "next/router";
-import routerPush from "@/utils/routerPush";
+import PaginationComponent from "@/components/common/Pagination";
 
 export default function Blogs({ blogsData, postsCategories }) {
-  const router = useRouter();
-
-  const handleChange = (e, page) => {
-    router.query.page = page;
-
-    routerPush(router);
-  };
-
   return (
     <>
       <Head>
@@ -43,14 +33,10 @@ export default function Blogs({ blogsData, postsCategories }) {
             </div>
             <div className='grid grid-cols-6 md:col-span-9 gap-y-6 gap-x-10'>
               <PostList blogsData={blogsData.docs} />
-              <div className='flex items-center justify-center col-span-6 max-h-10'>
-                <Pagination
-                  count={blogsData.totalPages}
-                  page={blogsData.page}
-                  onChange={(e, page) => handleChange(e, page)}
-                  color={"primary"}
-                />
-              </div>
+              <PaginationComponent
+                totalPages={blogsData.totalPages}
+                page={blogsData.page}
+              />
             </div>
           </div>
         </div>
