@@ -25,7 +25,7 @@ const Accordion = ({ postsCategories }) => {
   };
 
   return (
-    <div className='overflow-hidden bg-white select-none rounded-2xl'>
+    <div className='sticky overflow-hidden bg-white select-none top-20 rounded-2xl'>
       {/* accordion header */}
       <div
         onClick={() => setIsOpen(!isOpen)}
