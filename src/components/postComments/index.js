@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import Form from "../form";
 import ReplayedComments from "./ReplayedComments";
 import SingleComment from "./SingleComment";
+import onSubmitHandler from "@/utils/handleSubmitComment";
 
 const PostComments = ({ post }) => {
-  const [value, setValue] = useState("");
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(value);
-    setValue("");
-  };
-
   const renderComments = () => {
     return post.comments.map((comment) => {
       return (
@@ -39,7 +32,7 @@ const PostComments = ({ post }) => {
         <h3 className='text-lg font-medium text-gray-700'>
           Leave a new comment
         </h3>
-        <Form value={value} setValue={setValue} onSubmit={onSubmitHandler} />
+        <Form postId={post._id} responseTo={null} onSubmit={onSubmitHandler} />
       </div>
     </div>
   );

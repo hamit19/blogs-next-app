@@ -2,17 +2,11 @@ import toLocalDate from "@/utils/toLocalDate";
 import { UserIcon } from "@heroicons/react/outline";
 import React, { useState } from "react";
 import Form from "../form";
+import http from "@/services/httpServices";
+import onSubmitHandler from "@/utils/handleSubmitComment";
 
 const SingleComment = ({ comment }) => {
   const [isOnReplay, setIsOnReplay] = useState(false);
-  const [value, setValue] = useState("");
-
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
-    console.log(value);
-    setValue("");
-    setIsOnReplay(false);
-  };
 
   return (
     <div className='w-full p-4 my-2 bg-white rounded-lg shadow-lg '>
@@ -46,7 +40,12 @@ const SingleComment = ({ comment }) => {
             Replaying to{" "}
             <span className='text-gray-500'>{comment.writer?.name}</span>{" "}
           </span>
-          <Form value={value} setValue={setValue} onSubmit={onSubmitHandler} />
+          <Form
+            onSubmit={onSubmitHandler}
+            postId={comment.postId}
+            responseTo={comment._id}
+            setIsOnReplay={setIsOnReplay}
+          />
         </div>
       )}
     </div>
