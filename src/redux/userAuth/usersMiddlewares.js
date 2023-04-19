@@ -3,10 +3,8 @@ import {
   userAuthFailed,
   userAuthPending,
   userAuthSuccess,
-  userSignOutFailed,
-  userSingOutPending,
-  userSingOutSuccess,
 } from "./userActions";
+import { toast } from "react-hot-toast";
 
 export const userSignInMiddleware = (userData) => async (dispatch) => {
   dispatch(userAuthPending());
@@ -15,32 +13,40 @@ export const userSignInMiddleware = (userData) => async (dispatch) => {
     const { data } = await http.post("/api/user/signin", { ...userData });
 
     dispatch(userAuthSuccess(data));
+    toast.success("You've signed in successfully!");
   } catch (err) {
     dispatch(userAuthFailed(err));
+    toast.error(err.response.data.message);
   }
 };
 
-export const signupMiddleware = (userData) => async (dispatch) => {
+export const userSignupMiddleware = (userData) => async (dispatch) => {
   dispatch(userAuthPending());
 
   try {
     const { data } = await http.post("/api/user/signup", { ...userData });
 
     dispatch(userAuthSuccess(data));
+    toast.success("You've signed up successfully!");
   } catch (err) {
     dispatch(userAuthFailed(err));
+    console.log(err.response.data.message);
+    toast.error(err.response.data.message);
   }
 };
 
 export const userSinOutMiddleware = () => async (dispatch) => {
-  dispatch(userSingOutPending());
+  dispatch(userAuthPending());
 
   try {
     const { data } = await http.get("/api/user/logout");
 
-    dispatch(userSingOutSuccess());
+    dispatch(userAuthSuccess(data));
+
+    toast.success("You've signed out successfully!");
   } catch (err) {
-    dispatch(userSignOutFailed(err));
+    dispatch(userAuthFailed(err));
+    toast.error("Something went wrong try again!");
   }
 };
 

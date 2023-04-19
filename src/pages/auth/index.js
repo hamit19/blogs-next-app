@@ -1,10 +1,14 @@
 import InputComponent from "@/components/inputComponent";
-import { useAuth, useAuthActions } from "@/context/authContext";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  userSignInMiddleware,
+  userSignupMiddleware,
+} from "src/redux/userAuth/usersMiddlewares";
 import * as Yup from "yup";
 
 const SignUpInitialValues = {
@@ -48,9 +52,9 @@ const SignInValidationSchema = Yup.object({
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
-  const dispatch = useAuthActions();
+  const { user, loading } = useSelector((state) => state.authUser);
 
-  const { user, loading } = useAuth();
+  const dispatch = useDispatch();
 
   const router = useRouter();
 
@@ -69,14 +73,8 @@ const Auth = () => {
     const { name, email, password, phoneNumber } = formik.values;
 
     isSignUp
-      ? dispatch({
-          type: "SIGNUP",
-          payload: { name, email, password, phoneNumber },
-        })
-      : dispatch({
-          type: "SIGNIN",
-          payload: { email, password },
-        });
+      ? dispatch(userSignupMiddleware({ name, email, password, phoneNumber }))
+      : dispatch(userSignInMiddleware({ email, password }));
   };
 
   useEffect(() => {

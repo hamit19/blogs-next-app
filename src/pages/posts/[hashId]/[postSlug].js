@@ -1,5 +1,4 @@
 import { BookmarkIcon } from "@heroicons/react/outline";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -19,7 +18,7 @@ import toLocalDate from "@/utils/toLocalDate";
 import http from "@/services/httpServices";
 import handleBookmark from "@/utils/handleBookmark";
 import { useRouter } from "next/router";
-import { useAuth } from "@/context/authContext";
+import { useSelector } from "react-redux";
 
 // copyLink helper component!
 const CopyLinkComponent = ({ postData, copied, handleOnCopy }) => (
@@ -39,7 +38,7 @@ const Post = ({ postData }) => {
 
   const router = useRouter();
 
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.authUser);
 
   const handleOnCopy = () => {
     setCopied(true);

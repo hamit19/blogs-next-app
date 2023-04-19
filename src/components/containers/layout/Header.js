@@ -1,13 +1,14 @@
-import { useAuth, useAuthActions } from "@/context/authContext";
 import { UserCircleIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import React from "react";
 import ProfileOptions from "./ProfileOptions";
+import { useDispatch, useSelector } from "react-redux";
+import { userSinOutMiddleware } from "src/redux/userAuth/usersMiddlewares";
 
 const Header = ({ isShow, setIsShow }) => {
-  const { user, loading } = useAuth();
+  const { user, loading } = useSelector((state) => state.authUser);
 
-  const dispatch = useAuthActions();
+  const dispatch = useDispatch();
 
   const options = [
     {
@@ -17,7 +18,7 @@ const Header = ({ isShow, setIsShow }) => {
     },
     {
       label: "Sign out",
-      action: () => dispatch({ type: "LOGOUT" }),
+      action: () => dispatch(userSinOutMiddleware()),
       link: false,
     },
   ];

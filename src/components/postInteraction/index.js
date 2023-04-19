@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   ChatAltIcon,
   HeartIcon,
@@ -10,16 +10,15 @@ import {
   HeartIcon as SolidHeartIcon,
   BookmarkIcon as SolidBookmarkIcon,
 } from "@heroicons/react/solid";
-import { useAuth } from "@/context/authContext";
 import { toast } from "react-hot-toast";
-import axios from "axios";
 import http from "@/services/httpServices";
 import { useRouter } from "next/router";
 import handleBookmark from "@/utils/handleBookmark";
 import routerPush from "@/utils/routerPush";
+import { useSelector } from "react-redux";
 
 const PostInteractions = ({ blog, isSmall, className }) => {
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.authUser);
 
   const router = useRouter();
 

@@ -2,20 +2,25 @@ import Layout from "@/components/containers/layout";
 import { Toaster } from "react-hot-toast";
 
 import "../styles/globals.css";
-import AuthProvider from "@/context/authContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { wrapper } from "src/redux/store";
+import { useDispatch } from "react-redux";
+import { fetchUserDataMiddleware } from "src/redux/userAuth/usersMiddlewares";
 
 function App({ Component, pageProps }) {
   const [isShow, setIsShow] = useState(false);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserDataMiddleware());
+  }, []);
+
   return (
-    <AuthProvider>
-      <Layout isShow={isShow} setIsShow={setIsShow}>
-        <Component {...pageProps} />
-        <Toaster />
-      </Layout>
-    </AuthProvider>
+    <Layout isShow={isShow} setIsShow={setIsShow}>
+      <Component {...pageProps} />
+      <Toaster />
+    </Layout>
   );
 }
 
