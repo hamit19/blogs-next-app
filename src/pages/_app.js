@@ -4,8 +4,9 @@ import { Toaster } from "react-hot-toast";
 import "../styles/globals.css";
 import AuthProvider from "@/context/authContext";
 import { useState } from "react";
+import { wrapper } from "src/redux/store";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const [isShow, setIsShow] = useState(false);
 
   return (
@@ -17,3 +18,5 @@ export default function App({ Component, pageProps }) {
     </AuthProvider>
   );
 }
+
+export default wrapper.withRedux(App);

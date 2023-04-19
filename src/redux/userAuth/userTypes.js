@@ -1,0 +1,8 @@
+export const USER_AUTH_PENDING = "USER_AUTH_PENDING";
+export const USER_AUTH_SUCCESS = "USER_AUTH_SUCCESS";
+export const USER_AUTH_FAILED = "USER_AUTH_FAILED";
+
+// user's sign out actions types
+export const USER_SIGN_OUT_PENDING = "USER_SIGN_OUT_PENDING";
+export const USER_SIGN_OUT_SUCCESS = "USER_SIGN_OUT_SUCCESS";
+export const USER_SIGN_OUT_FAILED = "USER_SIGN_OUT_FAILED";
