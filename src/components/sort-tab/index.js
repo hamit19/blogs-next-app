@@ -39,7 +39,7 @@ const Sort = () => {
   };
 
   return (
-    <div className='flex gap-4 px-4 py-1 bg-white rounded-2xl'>
+    <div className='flex gap-4 px-4 py-1 bg-white shadow-lg shadow-gray-200 rounded-2xl'>
       <div className='flex items-center gap-2'>
         <AdjustmentsIcon className='w-6 h-6 stroke-purple-400' />
         <span className='text-gray-600'>Sort by : </span>

@@ -25,7 +25,7 @@ const Accordion = ({ postsCategories }) => {
   };
 
   return (
-    <div className='sticky overflow-hidden bg-white select-none top-20 rounded-2xl'>
+    <div className='sticky overflow-hidden bg-white shadow-xl select-none shadow-gray-200 top-20 rounded-2xl'>
       {/* accordion header */}
       <div
         onClick={() => setIsOpen(!isOpen)}
@@ -40,7 +40,7 @@ const Accordion = ({ postsCategories }) => {
       </div>
       {/* accordion content */}
       <div
-        className={` h-0 px-1 flex gap-1 flex-col custom-transition ${
+        className={` h-0 px-1 py-2 flex gap-1 flex-col custom-transition ${
           !isOpen ? "h-0 hidden" : " block h-auto"
         }`}
       >

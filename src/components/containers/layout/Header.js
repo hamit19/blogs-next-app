@@ -23,22 +23,28 @@ const Header = ({ isShow, setIsShow }) => {
   ];
 
   return (
-    <header className='sticky top-0 left-0 right-0 z-50 flex justify-between w-full px-10 py-4 bg-white shadow-md'>
+    <header className='sticky top-0 left-0 right-0 z-50 flex items-center justify-between w-full px-10 bg-white shadow-md'>
       <ul className='flex justify-around gap-4 px-2 '>
-        <li>
-          <Link href='/'>Home</Link>
+        <li className='py-4'>
+          <Link className='py-4' href='/'>
+            Home
+          </Link>
         </li>
-        <li>
-          <Link href='/blogs'>Blogs</Link>
+        <li className='py-4'>
+          <Link className='py-4' href='/blogs'>
+            Blogs
+          </Link>
         </li>
       </ul>
       <div
-        className={`text-sm font-medium custom-transition ${
+        className={`text-sm py-4 font-medium custom-transition ${
           loading ? "opacity-0" : "opacity-100"
         } `}
       >
         {!user?._id ? (
-          <Link href='/auth'>Sign Up/Sing In</Link>
+          <Link className='py-4' href='/auth'>
+            Sign Up/Sing In
+          </Link>
         ) : (
           <div
             className='relative '

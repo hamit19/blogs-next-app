@@ -8,7 +8,7 @@ const PostList = ({ blogsData }) => {
     return blogsData.map((blog) => (
       <div
         key={blog._id}
-        className='flex flex-col max-h-[380px] md:max-h-[330px] col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'
+        className='flex flex-col  shadow-lg shadow-gray-200 max-h-[380px] md:max-h-[330px] col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'
       >
         {/* blogs cover */}
         <Link href={`/posts/${blog.hashId}/${blog.slug}`}>
