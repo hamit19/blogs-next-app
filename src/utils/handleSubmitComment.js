@@ -13,6 +13,10 @@ const onSubmitHandler = async (
 ) => {
   e.preventDefault();
 
+  if (value.length <= 5) {
+    return toast.error("Your comment should be longer than 5 characters!");
+  }
+
   try {
     const { data } = await http.post(`/api/post-comment/save-comment`, {
       content: value,
