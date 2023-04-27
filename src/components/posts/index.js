@@ -3,27 +3,31 @@ import Image from "next/image";
 import Link from "next/link";
 import PostInteractions from "../postInteraction";
 
-const PostList = ({ blogsData }) => {
+const PostList = ({ blogsData, maxHight, mobileMaxHight }) => {
   const renderPosts = () => {
     return blogsData.map((blog) => (
       <div
         key={blog._id}
-        className='flex flex-col  shadow-lg shadow-gray-200 max-h-[380px] md:max-h-[330px] col-span-6 bg-white md:col-span-3 rounded-xl lg:col-span-2'
+        className={`flex flex-col col-span-6 bg-white ${
+          maxHight && "md:max-h-[330px]"
+        } ${
+          mobileMaxHight && "max-h-[380px]"
+        } shadow-lg shadow-gray-200 md:col-span-3 rounded-xl lg:col-span-2`}
       >
         {/* blogs cover */}
         <Link href={`/posts/${blog.hashId}/${blog.slug}`}>
-          <div className='relative rounded-2xl overflow-hidden pt-[56%]'>
+          <div className='overflow-hidden rounded-2xl aspect-w-16 aspect-h-9'>
             <Image
               fill={true}
               src={blog.coverImage}
               alt='blogs cover'
-              className='absolute inset-0 object-cover object-center '
+              className='object-cover object-center'
             />
           </div>
         </Link>
 
         {/* blogs content */}
-        <div className='flex flex-col justify-between flex-1 w-full px-2 py-4'>
+        <div className='flex flex-col justify-between flex-1 w-full px-2 py-4 bg-white rounded-xl'>
           {/* blogs title */}
           <Link href={`/posts/${blog.hashId}/${blog.slug}`}>
             <h3 className='mb-4 font-bold'>

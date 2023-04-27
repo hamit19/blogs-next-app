@@ -166,8 +166,8 @@ const Post = ({ postData }) => {
           odit quos reiciendis blanditiis inventore?
         </p>
 
-        <div className='overflow-hidden bg-red-100 aspect-w-16 aspect-h-8 rounded-xl '>
-          <img src={postData.coverImage} alt='posts cover' />
+        <div className='overflow-hidden aspect-w-16 aspect-h-8 rounded-xl '>
+          <Image src={postData.coverImage} alt='posts cover' fill />
         </div>
 
         <h2>3. This is a testing heading!</h2>

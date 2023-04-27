@@ -33,7 +33,11 @@ export default function blogCategories({ blogsData, postsCategories }) {
               <Sort />
             </div>
             <div className='grid grid-cols-6 md:col-span-9 gap-y-6 gap-x-10'>
-              <PostList blogsData={blogsData.docs} />
+              <PostList
+                maxHight
+                blogsData={blogsData.docs}
+                mobileMaxHight={blogsData.docs.length === 1 ? true : false}
+              />
             </div>
           </div>
         </div>

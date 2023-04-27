@@ -32,7 +32,11 @@ export default function Blogs({ blogsData, postsCategories }) {
               <Sort />
             </div>
             <div className='grid grid-cols-6 md:col-span-9 gap-y-6 gap-x-10'>
-              <PostList blogsData={blogsData.docs} />
+              <PostList
+                blogsData={blogsData.docs}
+                maxHight
+                mobileMaxHight={blogsData.docs.length === 1 ? true : false}
+              />
               <PaginationComponent
                 totalPages={blogsData.totalPages}
                 page={blogsData.page}
