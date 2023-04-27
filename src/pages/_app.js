@@ -14,7 +14,7 @@ function App({ Component, pageProps }) {
 
   useEffect(() => {
     dispatch(fetchUserDataMiddleware());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Layout isShow={isShow} setIsShow={setIsShow}>

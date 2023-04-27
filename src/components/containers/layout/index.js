@@ -14,7 +14,7 @@ const Layout = ({ children, isShow, setIsShow }) => {
     window.onscroll = () => {
       isShow && setIsShow(false);
     };
-  }, [isShow]);
+  }, [isShow, setIsShow]);
 
   return (
     <>
